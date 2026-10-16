@@ -34,8 +34,8 @@ jobs:
 
       - name: Update
         run: |
-          sed -i '' -E "s/^([[:space:]]*)version .*/\1version \"$SEMVER\"/" "$CASK"
-          sed -i '' -E "s/^([[:space:]]*)sha256 .*/\1sha256 \"$SHA256\"/" "$CASK"
+          sed -i -E "s/^([[:space:]]*)version .*/\1version \"$SEMVER\"/" "$CASK"
+          sed -i -E "s/^([[:space:]]*)sha256 .*/\1sha256 \"$SHA256\"/" "$CASK"
 
       - name: Check
         id: check
