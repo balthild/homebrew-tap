@@ -1,0 +1,66 @@
+name: Update Cask
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: Name
+        type: string
+        required: true
+      semver:
+        description: Version
+        type: string
+        required: true
+      sha256:
+        description: SHA256
+        type: string
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Variable
+        run: |
+          echo NAME="${{ inputs.name }}" >> $GITHUB_ENV
+          echo CASK="./Casks/${{ inputs.name }}.rb" >> $GITHUB_ENV
+          echo SEMVER="${{ inputs.semver }}" >> $GITHUB_ENV
+          echo SHA256="${{ inputs.sha256 }}" >> $GITHUB_ENV
+
+      - name: Update
+        run: |
+          sed -i '' -E "s/^([[:space:]]*)version .*/\1version \"$SEMVER\"/" "$CASK"
+          sed -i '' -E "s/^([[:space:]]*)sha256 .*/\1sha256 \"$SHA256\"/" "$CASK"
+
+      - name: Check
+        id: check
+        run: |
+          if ! grep -q "version \"$SEMVER\"" "$CASK"; then
+            echo "failed to stamp version in $CASK" >&2
+            exit 1
+          fi
+          if ! grep -q "sha256 \"$SHA256\"" "$CASK"; then
+            echo "failed to stamp sha256 in $CASK" >&2
+            exit 1
+          fi
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "modified=true" >> $GITHUB_OUTPUT
+          else
+            echo "modified=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit
+        if: steps.check.outputs.modified == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "$CASK"
+          git commit -m "chore: update $NAME to version $SEMVER"
+          git push
