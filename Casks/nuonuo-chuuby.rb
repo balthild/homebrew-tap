@@ -5,7 +5,7 @@ cask "nuonuo-chuuby" do
 
 	version "0.3.0"
 	sha256 "e9ad18078db1853476231e10f06898ac48c0d37c19938c88480e42adef883c45"
-	url "https://github.com/balthild/NuonuoChuuby/releases/download/v#{version}/NuonuoChuuby-v#{version}.zip"
+	url "https://github.com/balthild/NuonuoChuuby/releases/download/v#{version}/NuonuoChuuby-v#{version}.dmg"
 
 	depends_on arch: :arm64
 	depends_on macos: :sonoma

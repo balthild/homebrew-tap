@@ -5,7 +5,7 @@ cask "calendar-shouter" do
 
 	version "0.1.1"
 	sha256 "3afe646b7ad053e4afb28182d26528eb5874d10d9949c98a8f5c065a1696034d"
-	url "https://github.com/balthild/CalendarShouter/releases/download/v#{version}/CalendarShouter-v#{version}.zip"
+	url "https://github.com/balthild/CalendarShouter/releases/download/v#{version}/CalendarShouter-v#{version}.dmg"
 
 	depends_on arch: :arm64
 	depends_on macos: :sequoia
