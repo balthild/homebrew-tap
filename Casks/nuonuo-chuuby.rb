@@ -3,8 +3,8 @@ cask "nuonuo-chuuby" do
 	desc "Desktop pet that lives on your windows"
 	homepage "https://github.com/balthild/NuonuoChuuby"
 
-	version "0.4.3"
-	sha256 "951f45da252b30f56b565698dc65fe3779515e9543939cf0963b9d659c751d3e"
+	version "0.4.4"
+	sha256 "33b8dc2d9ff67c759b9aa894083f3d225065b38871ac432d66a94754bfa21a13"
 	url "https://github.com/balthild/NuonuoChuuby/releases/download/v#{version}/NuonuoChuuby-v#{version}.dmg"
 
 	depends_on arch: :arm64
